@@ -18,10 +18,10 @@ function handleKeyboardClick(event){
   var hasMatch = checkForMatch(clickedLetter);
 
   if (!hasMatch) {
-    // What function do we call??
+    removeSnowmanPart(); 
     checkForLoser();
   } else {
-    // What function do we call??
+    checkForWinner();
   }
 }
 
