@@ -1,13 +1,16 @@
-// ADD YOUR ARRAY OF WORDS HERE
+var words = ["MATTDUBZ", "WINTER", "SCARF", "ALFONSOPOOPY", "FROST", "DEEZNUTZ", "SLEET", "CHILL", "FAIRS", "COCOA"];
 
 var snowmanParts = [".hat", ".face", ".scarf", ".hands", ".body-top", ".body-middle", ".body-bottom"];
 var randomWord = getRandomWord(words);
 var keyboardContainer = document.querySelector('#keyboard-container');
+var gameOver = false;
 keyboardContainer.addEventListener("click", handleKeyboardClick);
 
 generateHiddenWord(randomWord);
 
 function handleKeyboardClick(event){
+  if (gameOver) return;
+
   var clickedElement = event.target;
 
   if (!clickedElement.classList.contains("letter") || clickedElement.classList.contains("selected")) return;
@@ -18,7 +21,7 @@ function handleKeyboardClick(event){
   var hasMatch = checkForMatch(clickedLetter);
 
   if (!hasMatch) {
-    removeSnowmanPart(); 
+    removeSnowmanPart();
     checkForLoser();
   } else {
     checkForWinner();
@@ -71,7 +74,25 @@ function getRandomWord(words) {
   return randomWord;
 }
 
-// CHECK FOR LOSER FUNCTION HERE
+function checkForLoser() {
+  if (snowmanParts.length === 0) {
+    gameOver = true;
+    showMessage("You lost!");
+  }
+}
 
+function checkForWinner() {
+  var hiddenLetters = document.querySelectorAll(".hidden");
 
-// CHECK FOR WINNER FUNCTION HERE
+  if (hiddenLetters.length === 0) {
+    gameOver = true;
+    showMessage("You won!");
+  }
+}
+
+function showMessage(text) {
+  var message = document.createElement("h2");
+  message.textContent = text;
+  document.querySelector("main").appendChild(message);
+}
+
